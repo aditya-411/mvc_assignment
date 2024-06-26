@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"../pkg/api"
+	"github.com/aditya-411/mvc_assignment/pkg/api"
 )
 
 func main() {

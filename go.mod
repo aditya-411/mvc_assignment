@@ -1,4 +1,4 @@
-module maverick_mvc_assignment
+module github.com/aditya-411/mvc_assignment
 
 go 1.20
 

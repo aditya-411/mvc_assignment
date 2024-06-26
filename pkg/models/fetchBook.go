@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 
-	"../types"
+	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
 
 func FetchBooks() types.ListBooks {

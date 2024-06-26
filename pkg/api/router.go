@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"../controller"
+	"github.com/aditya-411/mvc_assignment/pkg/controller"
 	"github.com/gorilla/mux"
 )
 

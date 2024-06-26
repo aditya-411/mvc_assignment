@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 
-	"../models"
-	"../types"
+	"github.com/aditya-411/mvc_assignment/pkg/models"
+	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
 
 func Add(writer http.ResponseWriter, request *http.Request) {
