@@ -2,19 +2,26 @@ package api
 
 import (
 	"net/http"
-
 	"github.com/aditya-411/mvc_assignment/pkg/controller"
 	"github.com/gorilla/mux"
+	"github.com/aditya-411/mvc_assignment/pkg/middleware"
+	"github.com/joho/godotenv"
 )
 
 func Start() {
-	r := mux.NewRouter()
-	r.HandleFunc("/", controller.LandingPage_controller).Methods("GET")
-	r.HandleFunc("/login", controller.Login).Methods("GET")
-	r.HandleFunc("/login", controller.Login).Methods("POST")
-	r.HandleFunc("/register", controller.RegisterPage).Methods("GET")
-	r.HandleFunc("/user", controller.UserPage).Methods("GET")
-	r.HandleFunc("/register", controller.RegisterPage).Methods("POST")
+	godotenv.Load("../../.env")
+	router := mux.NewRouter()
 
-	http.ListenAndServe(":8000", r)
+	router.HandleFunc("/", controller.LandingPage_controller).Methods("GET")
+	router.HandleFunc("/login", controller.Login).Methods("GET")
+	router.HandleFunc("/login", controller.Login).Methods("POST")
+	router.HandleFunc("/register", controller.RegisterPage).Methods("GET")
+	router.HandleFunc("/register", controller.RegisterPage).Methods("POST")
+
+	router.HandleFunc("/user", controller.UserPage).Methods("GET")
+
+	router.Use(middleware.Middleware)
+
+
+	http.ListenAndServe(":8000", router)
 }
