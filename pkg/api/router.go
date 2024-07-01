@@ -14,6 +14,7 @@ func Start() {
 	r.HandleFunc("/login", controller.Login).Methods("POST")
 	r.HandleFunc("/register", controller.RegisterPage).Methods("GET")
 	r.HandleFunc("/user", controller.UserPage).Methods("GET")
+	r.HandleFunc("/register", controller.RegisterPage).Methods("POST")
 
 	http.ListenAndServe(":8000", r)
 }
