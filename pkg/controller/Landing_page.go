@@ -6,7 +6,7 @@ import (
 	"github.com/aditya-411/mvc_assignment/pkg/views"
 )
 
-func Welcome(writer http.ResponseWriter, request *http.Request) {
-	t := views.StartPage()
+func LandingPage_controller(writer http.ResponseWriter, request *http.Request) {
+	t := views.LandingPage()
 	t.Execute(writer, nil)
 }

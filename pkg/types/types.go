@@ -7,3 +7,8 @@ type Book struct {
 type ListBooks struct {
 	Books []Book `json:"books"`
 }
+
+
+type Message struct {
+	Text string
+}

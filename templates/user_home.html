@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Portal</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+      
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 50px;
+      }
+      
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 30px;
+        text-align: center;
+      }
+      
+      li {
+        margin-bottom: 10px;
+      }
+      
+      form {
+        display: inline-block;
+      }
+      
+      button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      
+      p.message {
+        text-align: center;
+        margin-top: 20px;
+        color: #666;
+      }
+      
+      p {
+        color: #4CAF50;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+      
+      .logout {
+        background-color: #f44336;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to the Library Management Portal</h1>
+    <p>Hello, {{.username}}! Here are some options for you:</p>
+    <ul>
+      <li>
+        <form action="/user/browse" method="get">
+          <button type="submit">Browse Books</button>
+        </form>
+      </li>
+      <li>
+        <form action="/user/my_books" method="get">
+          <button type="submit">My Books and history</button>
+        </form>
+      </li>
+      <li>
+        <form action="/register/update_password" method="get">
+          <button type="submit">Update password</button>
+        </form>
+      </li>
+      {{if not .isadmin}}
+      <li>
+        <form action="/user/request_admin" method="post">
+          <button type="submit">Request admin access</button>
+        </form>
+      </li>
+      {{end}}
+      {{if .isadmin}}
+      <li>
+        <form action="/admin/" method="get">
+          <button type="submit">Admin Options</button>
+          </form>
+      </li>
+      {{end}}
+      <li>
+        <form action="/login/logout" method="post">
+          <button type="submit" class="logout">Logout</button>
+        </form>
+      </li>
+    </ul>
+    <p>{{if .message}}{{.message}}{{end}}</p>
+  </body>
+</html>

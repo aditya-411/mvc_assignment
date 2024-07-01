@@ -9,9 +9,11 @@ import (
 
 func Start() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", controller.Welcome).Methods("GET")
-	r.HandleFunc("/add", controller.Add).Methods("POST")
-	r.HandleFunc("/list", controller.List).Methods("GET")
+	r.HandleFunc("/", controller.LandingPage_controller).Methods("GET")
+	r.HandleFunc("/login", controller.Login).Methods("GET")
+	r.HandleFunc("/login", controller.Login).Methods("POST")
+	r.HandleFunc("/register", controller.RegisterPage).Methods("GET")
+	r.HandleFunc("/user", controller.UserPage).Methods("GET")
 
 	http.ListenAndServe(":8000", r)
 }
