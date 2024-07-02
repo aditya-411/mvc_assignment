@@ -18,3 +18,10 @@ func IssueBookPage(w http.ResponseWriter, r *http.Request) {
 	details := models.IssuePageDetails(book, r.Context().Value(types.Key("username")).(string))
 	views.IssueBookPage(w, details)
 }
+
+func ConfirmBookIssue(w http.ResponseWriter, r *http.Request) {
+	book := models.GetDetailsBook(r)
+	user := r.Context().Value(types.Key("username")).(string)
+	details := models.IssueConfirm(book, user)
+	views.IssueBookPage(w, details)
+}

@@ -6,6 +6,9 @@ import (
 	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
 
+// functions to use in main functions 
+
+
 func GetDetailsBook(request *http.Request) types.Book {
 	book := types.Book{
 		Name: request.FormValue("title"),
@@ -48,6 +51,9 @@ func MakeDetailsStruct(book types.Book, message string, show_button bool) types.
 	}
 }
 
+
+
+// main function to return the details of the book to controller
 func IssuePageDetails(book types.Book, user string) types.IssueBookPage {
 	message := ""
 	show_button := true
@@ -59,4 +65,23 @@ func IssuePageDetails(book types.Book, user string) types.IssueBookPage {
 		show_button = false
 	}
 	return MakeDetailsStruct(book, message, show_button)
+}
+
+
+// main function to confirm issue of the book
+func IssueConfirm(book types.Book, user string) types.IssueBookPage {
+	db, err := Connection()
+	message := ""
+	if err != nil {
+		panic(err)
+	}
+	_, err = db.Exec("INSERT INTO transactions (username, title, request_status) VALUES (?, ?, 1)", user, book.Name)
+	db.Close()
+	if err != nil {
+		 message = "Error in issuing book"
+	} else {
+		message = "Book issued request raised successfully"
+	}
+
+	return MakeDetailsStruct(book, message, false)
 }
