@@ -19,6 +19,7 @@ func Start() {
 	router.HandleFunc("/register", controller.RegisterPage).Methods("POST")
 
 	router.HandleFunc("/user", controller.UserPage).Methods("GET")
+	router.HandleFunc("/logout", controller.Logout).Methods("POST")
 
 	router.Use(middleware.Middleware)
 
