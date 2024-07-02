@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Issue Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        .book-details {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin: 5px 0;
+        }
+        
+        button.confirm-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        button.confirm-button:hover {
+            background-color: #45a049;
+        }
+        
+        .bottom {
+            background-color: #ddd;
+            padding: 10px;
+            text-align: center;
+            font-size: 1rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Issue Confirmation</h1>
+    <div class="book-details">
+        <h2>Book Details</h2>
+        <p>Book Name: {{.Book.Name}}</p>
+        <p>Publisher: {{.Book.Publisher}}</p>
+        <p>Author: {{.Book.Author}}</p>
+    </div>
+    <form action="/user/issue_confirm" method="POST">
+        <input type="hidden" name="title" value="{{.Book.Name}}">
+        <input type="hidden" name="author" value="{{.Book.Author}}">
+        <input type="hidden" name="publisher" value="{{.Book.Publisher}}">
+        {{if .Show_button}}
+        <button class="confirm-button" type="submit" style="display:flex">Confirm Issue Request</button>
+        {{end}}
+    </form>
+    {{if ne .Message ""}}
+    <p class="bottom">{{.Message}}</p>
+    {{end}}
+    <button class="confirm-button" type="button" onclick="window.location.href='/user'">Go to Home</button>
+</body>
+</html>

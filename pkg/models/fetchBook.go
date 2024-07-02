@@ -2,7 +2,6 @@ package models
 
 import (
 	"fmt"
-
 	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
 
@@ -11,7 +10,7 @@ func FetchBooks() types.ListBooks {
 	if err != nil {
 		fmt.Printf("error %s connecting to the database", err)
 	}
-	selectSql := "SELECT * FROM books_list"
+	selectSql := "SELECT * FROM books"
 	rows, err := db.Query(selectSql)
 	db.Close()
 
@@ -22,7 +21,7 @@ func FetchBooks() types.ListBooks {
 	var fetchBooks []types.Book
 	for rows.Next() {
 		var book types.Book
-		err := rows.Scan(&book.Name)
+		err := rows.Scan(&book.Name, &book.Author, &book.Publisher)
 		if err != nil {
 			fmt.Printf("error %s scanning the row", err)
 		}

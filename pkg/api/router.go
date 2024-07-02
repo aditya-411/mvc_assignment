@@ -21,6 +21,9 @@ func Start() {
 	router.HandleFunc("/user", controller.UserPage).Methods("GET")
 	router.HandleFunc("/logout", controller.Logout).Methods("POST")
 
+	router.HandleFunc("/user/browse", controller.BrowseBooks).Methods("GET")
+	router.HandleFunc("/user/issue", controller.IssueBookPage).Methods("POST")
+
 	router.Use(middleware.Middleware)
 
 

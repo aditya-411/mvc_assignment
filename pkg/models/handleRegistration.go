@@ -60,5 +60,6 @@ func Registration(username string, password string, confirmPassword string) erro
 	if err != nil {
 		return err
 	}
+	db.Close()
 	return nil
 }

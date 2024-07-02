@@ -2,6 +2,8 @@ package types
 
 type Book struct {
 	Name string `json:"name"`
+	Author string `json:"author"`
+	Publisher string `json:"publisher"`
 }
 
 type ListBooks struct {
@@ -18,3 +20,9 @@ type User struct {
 }
 
 type Key string
+
+type IssueBookPage struct {
+	Book Book
+	Message string
+	Show_button bool
+}

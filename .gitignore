@@ -2,3 +2,4 @@ mvc
 vendor/
 .env
 d.sql
+.DS_Store
