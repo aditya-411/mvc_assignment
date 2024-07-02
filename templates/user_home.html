@@ -63,7 +63,7 @@
   </head>
   <body>
     <h1>Welcome to the Library Management Portal</h1>
-    <p>Hello, {{.username}}! Here are some options for you:</p>
+    <p>Hello, {{.Username}}! Here are some options for you:</p>
     <ul>
       <li>
         <form action="/user/browse" method="get">
@@ -80,14 +80,14 @@
           <button type="submit">Update password</button>
         </form>
       </li>
-      {{if not .isadmin}}
+      {{if not .IsAdmin}}
       <li>
         <form action="/user/request_admin" method="post">
           <button type="submit">Request admin access</button>
         </form>
       </li>
       {{end}}
-      {{if .isadmin}}
+      {{if .IsAdmin}}
       <li>
         <form action="/admin/" method="get">
           <button type="submit">Admin Options</button>

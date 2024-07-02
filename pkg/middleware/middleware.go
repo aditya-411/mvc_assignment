@@ -8,9 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"github.com/joho/godotenv"
+	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
-
-type key string
 
 func stringInSlice(a string, list []string) bool {
     for _, b := range list {
@@ -42,10 +41,8 @@ func Middleware(next http.Handler) http.Handler {
 
 				username := claims["username"].(string)
 				isadmin := claims["isadmin"].(bool)
-				key1 := key("username")
-				key2 := key("isadmin")
-				r = r.WithContext(context.WithValue(r.Context(), key1, username))
-				r = r.WithContext(context.WithValue(r.Context(), key2, isadmin))
+				r = r.WithContext(context.WithValue(r.Context(), types.Key("username"), username))
+				r = r.WithContext(context.WithValue(r.Context(), types.Key("isadmin"), isadmin))
 				http.Redirect(w, r, "/user", http.StatusFound)
 				return
 			}
@@ -76,10 +73,8 @@ func Middleware(next http.Handler) http.Handler {
 
 			username := claims["username"].(string)
 			isadmin := claims["isadmin"].(bool)
-			key1 := key("username")
-			key2 := key("isadmin")
-			r = r.WithContext(context.WithValue(r.Context(), key1, username))
-			r = r.WithContext(context.WithValue(r.Context(), key2, isadmin))
+			r = r.WithContext(context.WithValue(r.Context(), types.Key("username"), username))
+			r = r.WithContext(context.WithValue(r.Context(), types.Key("isadmin"), isadmin))
 			next.ServeHTTP(w, r)
 		}
 	})

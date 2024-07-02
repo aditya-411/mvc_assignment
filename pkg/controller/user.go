@@ -2,14 +2,20 @@ package controller
 
 import (
 	"net/http"
-
 	//"github.com/aditya-411/mvc_assignment/pkg/models"
 	"github.com/aditya-411/mvc_assignment/pkg/views"
+	"github.com/aditya-411/mvc_assignment/pkg/types"
+	"fmt"
 )
 
 
 
 func UserPage(writer http.ResponseWriter, request *http.Request) {
 	t := views.UserPage()
-	t.Execute(writer, nil)
+	user := types.User{
+		Username: request.Context().Value(types.Key("username")).(string),
+		IsAdmin:  request.Context().Value(types.Key("isadmin")).(bool),
+	}
+	fmt.Println(user)
+	t.Execute(writer, user)
 }
