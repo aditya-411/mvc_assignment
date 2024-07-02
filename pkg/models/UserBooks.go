@@ -21,7 +21,7 @@ func GetCurrentlyIssuedBooks (username string, allBooks types.ListBooks) []types
 	if err != nil {
 		panic(err)
 	}
-	selectSql := "SELECT id, title, issued_at FROM transactions where username = ? and returned_at is NULL and issued_at is not NULL"
+	selectSql := "SELECT id, title, issued_at FROM transactions where username = ? and returned_at is NULL and issued_at is not NULL and request_status='0'"
 	rows, err := db.Query(selectSql, username)
 	db.Close()
 
