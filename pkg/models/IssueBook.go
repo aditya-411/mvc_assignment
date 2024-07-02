@@ -1,22 +1,10 @@
 package models
 
 import (
-	"net/http"
-
 	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
 
 // functions to use in main functions 
-
-
-func GetDetailsBook(request *http.Request) types.Book {
-	book := types.Book{
-		Name: request.FormValue("title"),
-		Publisher: request.FormValue("publisher"),
-		Author: request.FormValue("author"),
-	}
-	return book
-}
 
 
 func BookIssued(book types.Book, user string) bool {
@@ -43,7 +31,7 @@ func IssueRequestPending(user string) bool {
 }
 
 
-func MakeDetailsStruct(book types.Book, message string, show_button bool) types.IssueBookPage {
+func MakeDetailsStructIssuePage(book types.Book, message string, show_button bool) types.IssueBookPage {
 	return types.IssueBookPage{
 		Book: book,
 		Message: message,
@@ -64,7 +52,7 @@ func IssuePageDetails(book types.Book, user string) types.IssueBookPage {
 		message = "You already have a pending issue request for some book"
 		show_button = false
 	}
-	return MakeDetailsStruct(book, message, show_button)
+	return MakeDetailsStructIssuePage(book, message, show_button)
 }
 
 
@@ -75,7 +63,7 @@ func IssueConfirm(book types.Book, user string) types.IssueBookPage {
 	if err != nil {
 		panic(err)
 	}
-	_, err = db.Exec("INSERT INTO transactions (username, title, request_status) VALUES (?, ?, 1)", user, book.Name)
+	_, err = db.Exec("INSERT INTO transactions (username, title, request_status) VALUES (?, ?, '1')", user, book.Name)
 	db.Close()
 	if err != nil {
 		 message = "Error in issuing book"
@@ -83,5 +71,5 @@ func IssueConfirm(book types.Book, user string) types.IssueBookPage {
 		message = "Book issued request raised successfully"
 	}
 
-	return MakeDetailsStruct(book, message, false)
+	return MakeDetailsStructIssuePage(book, message, false)
 }

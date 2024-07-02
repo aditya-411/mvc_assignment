@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/aditya-411/mvc_assignment/pkg/types"
+	"net/http"
 )
 
 func FetchBooks() types.ListBooks {
@@ -32,4 +33,13 @@ func FetchBooks() types.ListBooks {
 	listBooks.Books = fetchBooks
 	return listBooks
 
+}
+
+func GetDetailsBook(request *http.Request) types.Book {
+	book := types.Book{
+		Name: request.FormValue("title"),
+		Publisher: request.FormValue("publisher"),
+		Author: request.FormValue("author"),
+	}
+	return book
 }

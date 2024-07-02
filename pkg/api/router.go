@@ -24,6 +24,7 @@ func Start() {
 	router.HandleFunc("/user/browse", controller.BrowseBooks).Methods("GET")
 	router.HandleFunc("/user/issue", controller.IssueBookPage).Methods("POST")
 	router.HandleFunc("/user/issue_confirm", controller.ConfirmBookIssue).Methods("POST")
+	router.HandleFunc("/user/my_books", controller.UserBooksPage).Methods("GET")
 
 	router.Use(middleware.Middleware)
 
