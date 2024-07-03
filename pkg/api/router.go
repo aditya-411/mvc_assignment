@@ -30,6 +30,9 @@ func Start() {
 	router.HandleFunc("/admin/remove", controller.RemoveBook).Methods("POST")
 	router.HandleFunc("/admin/update", controller.UpdateBookPage).Methods("POST")
 	router.HandleFunc("/admin/update_confirm", controller.UpdateBook).Methods("POST")
+	router.HandleFunc("/admin/requests", controller.BookRequestsPage).Methods("GET")
+	router.HandleFunc("/admin/requests/approve", controller.ApproveRequest).Methods("POST")
+	router.HandleFunc("/admin/requests/deny", controller.RejectRequest).Methods("POST")
 
 	router.HandleFunc("/user", controller.UserPage).Methods("GET")
 	router.HandleFunc("/user/browse", controller.BrowseBooks).Methods("GET")

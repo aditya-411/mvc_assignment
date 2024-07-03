@@ -29,9 +29,12 @@ type IssueBookPage struct {
 }
 
 type PendingApproval struct {
+	Id int
+	Username string
 	Name string
 	Author string
 	Type string
+	Fine int
 }
 
 type PrevTransaction struct {
@@ -62,3 +65,9 @@ type BookCatalogue struct {
 	Message string
 	Books []Book
 }
+
+type BookRequestManagementPage struct {
+	Message string
+	Requests []PendingApproval
+}
+
