@@ -25,3 +25,13 @@ func AddBook(w http.ResponseWriter, r *http.Request) {
 	}
 	views.BookCatalogue(w, details)
 }
+
+func RemoveBook(w http.ResponseWriter, r *http.Request) {
+	message := models.RemoveBook(r.FormValue("title"))
+	books := models.FetchBooks().Books
+	details := types.BookCatalogue{
+		Books: books,
+		Message: message,
+	}
+	views.BookCatalogue(w, details)
+}

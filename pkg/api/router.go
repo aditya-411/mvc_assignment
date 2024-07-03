@@ -27,6 +27,7 @@ func Start() {
 	router.HandleFunc("/admin", controller.AdminPage).Methods("GET")
 	router.HandleFunc("/admin/books", controller.BookCatalogue).Methods("GET")
 	router.HandleFunc("/admin/add", controller.AddBook).Methods("POST")
+	router.HandleFunc("/admin/remove", controller.RemoveBook).Methods("POST")
 
 	router.HandleFunc("/user", controller.UserPage).Methods("GET")
 	router.HandleFunc("/user/browse", controller.BrowseBooks).Methods("GET")
