@@ -71,3 +71,7 @@ type BookRequestManagementPage struct {
 	Requests []PendingApproval
 }
 
+type AdminAccessRequestsPage struct {
+	Message string
+	Requests []User
+}

@@ -13,8 +13,9 @@ func Start() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/", controller.LandingPage_controller).Methods("GET")
-	router.HandleFunc("/request_admin", controller.RequestAdminAccess).Methods("POST")
 
+	
+	router.HandleFunc("/request_admin", controller.RequestAdminAccess).Methods("POST")
 	router.HandleFunc("/login", controller.Login).Methods("GET")
 	router.HandleFunc("/login", controller.Login).Methods("POST")
 	router.HandleFunc("/register", controller.RegisterPage).Methods("GET")
@@ -33,6 +34,9 @@ func Start() {
 	router.HandleFunc("/admin/requests", controller.BookRequestsPage).Methods("GET")
 	router.HandleFunc("/admin/requests/approve", controller.ApproveRequest).Methods("POST")
 	router.HandleFunc("/admin/requests/deny", controller.RejectRequest).Methods("POST")
+	router.HandleFunc("/admin/access", controller.AdminAccessRequestsPage).Methods("GET")
+	router.HandleFunc("/admin/access/approve", controller.ApproveAdminRequest).Methods("POST")
+	router.HandleFunc("/admin/access/deny", controller.RejectAdminRequest).Methods("POST")
 
 	router.HandleFunc("/user", controller.UserPage).Methods("GET")
 	router.HandleFunc("/user/browse", controller.BrowseBooks).Methods("GET")
