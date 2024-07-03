@@ -82,7 +82,7 @@
       </li>
       {{if not .IsAdmin}}
       <li>
-        <form action="/user/request_admin" method="post">
+        <form action="/request_admin" method="post">
           <button type="submit">Request admin access</button>
         </form>
       </li>
@@ -100,6 +100,6 @@
         </form>
       </li>
     </ul>
-    <p>{{if .message}}{{.message}}{{end}}</p>
+    <p>{{if .Message}}{{.Message}}{{end}}</p>
   </body>
 </html>

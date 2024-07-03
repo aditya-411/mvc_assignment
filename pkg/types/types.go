@@ -17,6 +17,7 @@ type Message struct {
 type User struct {
 	Username string
 	IsAdmin  bool
+	Message string
 }
 
 type Key string

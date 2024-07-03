@@ -13,6 +13,8 @@ func Start() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/", controller.LandingPage_controller).Methods("GET")
+	router.HandleFunc("/request_admin", controller.RequestAdminAccess).Methods("POST")
+
 	router.HandleFunc("/login", controller.Login).Methods("GET")
 	router.HandleFunc("/login", controller.Login).Methods("POST")
 	router.HandleFunc("/register", controller.RegisterPage).Methods("GET")
