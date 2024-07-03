@@ -25,6 +25,7 @@ func alreadyRegistered(username string) error {
 	}
 	var count int
 	err = db.QueryRow("SELECT COUNT(username) FROM users WHERE username=?", username).Scan(&count)
+	db.Close()
 	if err != nil {
 		return err
 	}

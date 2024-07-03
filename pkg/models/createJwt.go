@@ -17,6 +17,7 @@ func GenerateJWT(username string) (string, error) {
 
 	var isadmin bool
 	err = db.QueryRow("SELECT isadmin FROM users WHERE username=?", username).Scan(&isadmin)
+	db.Close()
 	if err != nil {
 		return "", err
 	}

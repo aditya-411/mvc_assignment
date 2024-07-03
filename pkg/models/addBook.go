@@ -16,8 +16,14 @@ func AddBook(bookName string, author string, publisher string) string {
 		return fmt.Sprintf("Book %s already exists in the database", bookName)
 	}
 
+	if bookName == "" || author == "" || publisher == "" {
+		db.Close()
+		return "One or more fields in the book details are empty"
+	}
+
 	insertSql := "INSERT INTO books (title, author, publisher) VALUES (?, ?, ?)"
 	_, err = db.Exec(insertSql, bookName, author, publisher)
+	db.Close()
 	if err != nil {
 		return fmt.Sprintf("error %s inserting into the database", err)
 	} else {

@@ -18,6 +18,7 @@ func RemoveBook(bookName string) string {
 
 	deleteSql := "DELETE FROM books WHERE title = ?"
 	_, err = db.Exec(deleteSql, bookName)
+	db.Close()
 	if err != nil {
 		return fmt.Sprintf("error %s error deleting the book from database", err)
 	} else {
