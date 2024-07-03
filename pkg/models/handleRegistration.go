@@ -57,9 +57,9 @@ func Registration(username string, password string, confirmPassword string) erro
 		return err
 	}
 	_, err = db.Exec("INSERT INTO users (username, password, isadmin) VALUES (?, ?, 0)", username, hashedPassword)
+	db.Close()
 	if err != nil {
 		return err
 	}
-	db.Close()
 	return nil
 }
