@@ -1,9 +1,10 @@
 package models
 
 import (
+	"math"
 	"strconv"
 	"time"
-	"math"
+
 	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
 

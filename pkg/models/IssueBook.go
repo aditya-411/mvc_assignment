@@ -1,10 +1,11 @@
 package models
 
 import (
+
 	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
 
-// functions to use in main functions 
+// functions to use in main functions
 
 
 func BookIssued(book types.Book, user string) bool {
@@ -66,6 +67,7 @@ func IssueConfirm(book types.Book, user string) types.IssueBookPage {
 	_, err = db.Exec("INSERT INTO transactions (username, title, request_status) VALUES (?, ?, '1')", user, book.Name)
 	db.Close()
 	if err != nil {
+		 println(err.Error())
 		 message = "Error in issuing book"
 	} else {
 		message = "Book issued request raised successfully"

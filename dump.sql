@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.37, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.3.0, for macos14.2 (arm64)
 --
--- Host: localhost    Database: library
+-- Host: localhost    Database: books
 -- ------------------------------------------------------
--- Server version	8.0.37
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -36,7 +36,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES ('12345','1234','1234'),('title1','author1','publisher1'),('title2','author2','publisher2'),('title3','author3','publisher3'),('title4','author4','publisher4'),('title5','author5','publisher5');
+INSERT INTO `books` VALUES ('123','1234','12345'),('title1','author1','publisher1'),('title2','author2','publisher2'),('title3','author3','publisher3'),('title4','author4','publisher4'),('title5','author5','publisher5');
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -48,14 +48,14 @@ DROP TABLE IF EXISTS `transactions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transactions` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(100) DEFAULT NULL,
   `issued_at` date DEFAULT NULL,
   `returned_at` date DEFAULT NULL,
   `title` varchar(200) DEFAULT NULL,
   `request_status` enum('-1','0','1') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `transactions` (
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,'abc','2024-06-08','2024-06-08','12345','0');
+INSERT INTO `transactions` VALUES (1,'abc','2024-06-08','2024-06-08','12345','0'),(2,'abc','2024-07-04',NULL,'title1','0');
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +90,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('abc','$2b$10$OUpoa2drrk0RlI4aydlc0efWbZxwYgCKJWGEzd9RP9G51LadiqeNK',1,NULL),('bcd','$2b$10$qBfMwo3VhQXFQVtMDRVwFuf66NDfGtUDfAhoq08od1tqNbjn8uInm',0,1);
+INSERT INTO `users` VALUES ('abc','$2a$10$mAh9Ntujfi.uE1suYCg1seLWTV7whHPqm/KEs4g7aH92iFnCm6dzO',1,NULL),('bcd','$2b$10$qBfMwo3VhQXFQVtMDRVwFuf66NDfGtUDfAhoq08od1tqNbjn8uInm',0,1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -103,4 +103,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-08  2:54:58
+-- Dump completed on 2024-07-04  3:08:23
