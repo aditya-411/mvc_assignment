@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"github.com/joho/godotenv"
 	"github.com/aditya-411/mvc_assignment/pkg/types"
+	"strings"
 )
 
 func stringInSlice(a string, list []string) bool {
@@ -75,6 +76,11 @@ func Middleware(next http.Handler) http.Handler {
 			isadmin := claims["isadmin"].(bool)
 			r = r.WithContext(context.WithValue(r.Context(), types.Key("username"), username))
 			r = r.WithContext(context.WithValue(r.Context(), types.Key("isadmin"), isadmin))
+			route := r.URL.Path
+			if strings.HasPrefix(route, "/admin") && !isadmin {
+				http.Redirect(w, r, "/user", http.StatusFound)
+				return
+			}
 			next.ServeHTTP(w, r)
 		}
 	})

@@ -57,3 +57,8 @@ type UserBooksPage struct {
 	PendingApprovals []PendingApproval
 	PrevTransactions []PrevTransaction
 }
+
+type BookCatalogue struct {
+	Message string
+	Books []Book
+}

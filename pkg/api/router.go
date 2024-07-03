@@ -23,6 +23,11 @@ func Start() {
 	router.HandleFunc("/update_password", controller.UpdatePass).Methods("POST")
 	router.HandleFunc("/logout", controller.Logout).Methods("POST")
 
+
+	router.HandleFunc("/admin", controller.AdminPage).Methods("GET")
+	router.HandleFunc("/admin/books", controller.BookCatalogue).Methods("GET")
+	router.HandleFunc("/admin/add", controller.AddBook).Methods("POST")
+
 	router.HandleFunc("/user", controller.UserPage).Methods("GET")
 	router.HandleFunc("/user/browse", controller.BrowseBooks).Methods("GET")
 	router.HandleFunc("/user/issue", controller.IssueBookPage).Methods("POST")
