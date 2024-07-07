@@ -10,10 +10,10 @@ func ComparePass(username string, password string) (bool, error) {
 	if err != nil {
 		return false, fmt.Errorf("error connecting to the database: %s", err)
 	}
+	defer db.Close()
 
 	selectSql := "SELECT password FROM users WHERE username=?"
 	rows, err := db.Query(selectSql, username)
-	db.Close()
 
 	if err != nil {
 		return false, fmt.Errorf("error querying the database: %s", err)

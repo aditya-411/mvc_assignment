@@ -23,9 +23,9 @@ func alreadyRegistered(username string) error {
 	if err != nil {
 		return err
 	}
+	defer db.Close()
 	var count int
 	err = db.QueryRow("SELECT COUNT(username) FROM users WHERE username=?", username).Scan(&count)
-	db.Close()
 	if err != nil {
 		return err
 	}
@@ -57,8 +57,8 @@ func Registration(username string, password string, confirmPassword string) erro
 	if err != nil {
 		return err
 	}
+	defer db.Close()
 	_, err = db.Exec("INSERT INTO users (username, password, isadmin) VALUES (?, ?, 0)", username, hashedPassword)
-	db.Close()
 	if err != nil {
 		return err
 	}

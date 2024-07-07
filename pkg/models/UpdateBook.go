@@ -10,15 +10,14 @@ func UpdateBook(bookName string, book types.Book) (string, bool) {
 	if err != nil {
 		return fmt.Sprintf("error %s connecting to the database", err), false
 	}
+	defer db.Close()
 	var count int
 	db.QueryRow("SELECT COUNT(title) FROM books WHERE title = ?", bookName).Scan(&count)	
 	if count == 0{
-		db.Close()
 		return fmt.Sprintf("Book %s does not exist in database", bookName), false
 	}
 
 	if book.Name == "" || book.Author == "" || book.Publisher == "" {
-		db.Close()
 		return "One or more fields in the book details are empty", false
 	}
 

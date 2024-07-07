@@ -13,10 +13,10 @@ func BookIssued(book types.Book, user string) bool {
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 
 	var count int
 	db.QueryRow("SELECT COUNT(username) FROM transactions WHERE username = ? AND title = ? and issued_at is NOT NULL and returned_at is NULL", user, book.Name).Scan(&count)	
-	db.Close()
 	return count > 0
 }
 
@@ -25,9 +25,9 @@ func IssueRequestPending(user string) bool {
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 	var count int
 	db.QueryRow("SELECT COUNT(username) FROM transactions WHERE username = ? AND issued_at is NULL AND returned_at is NULL", user).Scan(&count)
-	db.Close()
 	return count > 0
 }
 
@@ -64,8 +64,8 @@ func IssueConfirm(book types.Book, user string) types.IssueBookPage {
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 	_, err = db.Exec("INSERT INTO transactions (username, title, request_status) VALUES (?, ?, '1')", user, book.Name)
-	db.Close()
 	if err != nil {
 		 println(err.Error())
 		 message = "Error in issuing book"

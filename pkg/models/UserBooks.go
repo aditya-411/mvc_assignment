@@ -22,9 +22,9 @@ func GetCurrentlyIssuedBooks (username string, allBooks types.ListBooks) []types
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 	selectSql := "SELECT id, title, issued_at FROM transactions where username = ? and returned_at is NULL and issued_at is not NULL and request_status='0'"
 	rows, err := db.Query(selectSql, username)
-	db.Close()
 
 	if err != nil {
 		panic(err)
@@ -56,9 +56,9 @@ func PendingApprovals (username string, books types.ListBooks) []types.PendingAp
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 	selectSql := "SELECT title, request_status FROM transactions where username = ? and request_status!='0'"
 	rows, err := db.Query(selectSql, username)
-	db.Close()
 
 	if err != nil {
 		panic(err)
@@ -94,9 +94,9 @@ func PrevTransactions (username string, books types.ListBooks) []types.PrevTrans
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 	selectSql := "SELECT id, title, issued_at, returned_at FROM transactions where username = ? AND returned_at is NOT NULL"
 	rows, err := db.Query(selectSql, username)
-	db.Close()
 
 	if err != nil {
 		panic(err)

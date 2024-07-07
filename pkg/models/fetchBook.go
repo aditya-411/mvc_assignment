@@ -11,9 +11,9 @@ func FetchBooks() types.ListBooks {
 	if err != nil {
 		fmt.Printf("error %s connecting to the database", err)
 	}
+	defer db.Close()
 	selectSql := "SELECT * FROM books"
 	rows, err := db.Query(selectSql)
-	db.Close()
 
 	if err != nil {
 		fmt.Printf("error %s querying the database", err)
