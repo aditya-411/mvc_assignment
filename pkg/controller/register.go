@@ -29,8 +29,5 @@ func RegisterPage(writer http.ResponseWriter, request *http.Request) {
 		t.Execute(writer, message)
 		return
 	}
-	message := types.Message{Text: "Registration successful"}
-	t.Execute(writer, message)
-
-
+	http.Redirect(writer, request, "/login", http.StatusFound)
 }
