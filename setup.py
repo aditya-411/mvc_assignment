@@ -51,9 +51,9 @@ with open(".env", "w") as file:
 print("done")
 
 print(f"Creating database with name {database}")
-os.system(f"mysql -u {user} -p{password} -e 'CREATE DATABASE {database}'")
+os.system(f"mysql -h {host} -P {port} -u {user} -p{password} -e 'CREATE DATABASE {database}'")
 print(f"Database {database} created, copying dump.sql to it now")
-os.system(f"mysql -u {user} -p{password} {database} < dump.sql")
+os.system(f"mysql -h {host} -P {port} -u {user} -p{password} {database} < dump.sql")
 print("done")
 
 admin_username = input("Enter the admin username: ")
