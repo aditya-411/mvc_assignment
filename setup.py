@@ -67,8 +67,8 @@ while admin_password != confirm_admin_password:
 print("Adding admin user to the database")
 salt = bcrypt.gensalt(int(salt_rounds))
 hashed = bcrypt.hashpw(admin_password.encode(), salt)
-os.system(f"mysql -u {user} -p{password} {database} -e 'DELETE FROM users'")
-os.system(f"mysql -u {user} -p{password} {database} -e 'INSERT INTO users (username, password, isadmin) VALUES (\"{admin_username}\", \"{hashed.decode()}\", 1)'")
+os.system(f"mysql -h {host} -P {port} -u {user} -p{password} {database} -e 'DELETE FROM users'")
+os.system(f"mysql -h {host} -P {port} -u {user} -p{password} {database} -e 'INSERT INTO users (username, password, isadmin) VALUES (\"{admin_username}\", \"{hashed.decode()}\", 1)'")
 print("done")
 
 print("Building the binary")
