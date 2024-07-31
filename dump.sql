@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.3.0, for macos14.2 (arm64)
 --
--- Host: localhost    Database: books
+-- Host: localhost    Database: books1
 -- ------------------------------------------------------
 -- Server version	8.3.0
 
@@ -26,6 +26,7 @@ CREATE TABLE `books` (
   `title` varchar(100) NOT NULL,
   `author` varchar(50) DEFAULT NULL,
   `publisher` varchar(100) DEFAULT NULL,
+  `quantity_left` int DEFAULT NULL,
   PRIMARY KEY (`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -36,7 +37,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES ('123','1234','12345'),('title1','author1','publisher1'),('title2','author2','publisher2'),('title3','author3','publisher3'),('title4','author4','publisher4'),('title5','author5','publisher5');
+INSERT INTO `books` VALUES ('something','something','something',12343);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +56,7 @@ CREATE TABLE `transactions` (
   `title` varchar(200) DEFAULT NULL,
   `request_status` enum('-1','0','1') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +65,7 @@ CREATE TABLE `transactions` (
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,'abc','2024-06-08','2024-06-08','12345','0'),(2,'abc','2024-07-04',NULL,'title1','0');
+INSERT INTO `transactions` VALUES (14,'user','2024-07-31','2024-07-31','something','0'),(15,'user','2024-07-31',NULL,'something','0');
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +91,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('abc','$2a$10$mAh9Ntujfi.uE1suYCg1seLWTV7whHPqm/KEs4g7aH92iFnCm6dzO',1,NULL),('bcd','$2b$10$qBfMwo3VhQXFQVtMDRVwFuf66NDfGtUDfAhoq08od1tqNbjn8uInm',0,1);
+INSERT INTO `users` VALUES ('admin','$2b$10$K8tHU05Qc0IKWFd2NdlBReTQBkxbbvHZ3dBPX28zE5Pz/jtbMHhHq',1,NULL),('user','$2a$10$iUD42vtdY2nX.WtaDatJ3uN2qk0B0rNm38QptkmuQFx2et8SeZe9S',0,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -103,4 +104,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-04  3:08:23
+-- Dump completed on 2024-07-31 15:23:17
