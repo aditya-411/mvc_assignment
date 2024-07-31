@@ -2,9 +2,10 @@ package models
 
 import (
 	"fmt"
+	"strconv"
 )
 
-func AddBook(bookName string, author string, publisher string) string {
+func AddBook(bookName string, author string, publisher string, quantity string) string {
 	db, err := Connection()
 	if err != nil {
 		return fmt.Sprintf("error %s connecting to the database", err)
@@ -16,12 +17,18 @@ func AddBook(bookName string, author string, publisher string) string {
 		return fmt.Sprintf("Book %s already exists in the database", bookName)
 	}
 
-	if bookName == "" || author == "" || publisher == "" {
+	if bookName == "" || author == "" || publisher == "" || quantity == ""{
 		return "One or more fields in the book details are empty"
 	}
 
-	insertSql := "INSERT INTO books (title, author, publisher) VALUES (?, ?, ?)"
-	_, err = db.Exec(insertSql, bookName, author, publisher)
+	_, err = strconv.ParseInt(quantity, 10, 64)
+	if err != nil {
+		return fmt.Sprintf("error %s converting quantity to integer", err)
+	}
+
+
+	insertSql := "INSERT INTO books (title, author, publisher, quantity_left) VALUES (?, ?, ?, ?)"
+	_, err = db.Exec(insertSql, bookName, author, publisher, quantity)
 	if err != nil {
 		return fmt.Sprintf("error %s inserting into the database", err)
 	} else {

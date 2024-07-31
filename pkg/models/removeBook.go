@@ -16,7 +16,13 @@ func RemoveBook(bookName string) string {
 		return fmt.Sprintf("Book %s does not exist in database", bookName)
 	}
 
-	deleteSql := "DELETE FROM books WHERE title = ?"
+	deleteSql := "DELETE FROM transactions WHERE title = ?"
+	_, err = db.Exec(deleteSql, bookName)
+	if err != nil {
+		return fmt.Sprintf("error %s error deleting transactions with this book from database", err)
+	} 
+	
+	deleteSql = "DELETE FROM books WHERE title = ?"
 	_, err = db.Exec(deleteSql, bookName)
 	if err != nil {
 		return fmt.Sprintf("error %s error deleting the book from database", err)

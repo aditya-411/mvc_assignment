@@ -4,6 +4,7 @@ type Book struct {
 	Name string `json:"name"`
 	Author string `json:"author"`
 	Publisher string `json:"publisher"`
+	Quantity string `json:"quantity"`
 }
 
 type ListBooks struct {

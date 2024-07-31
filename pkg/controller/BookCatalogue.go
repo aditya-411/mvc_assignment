@@ -17,7 +17,7 @@ func BookCatalogue(w http.ResponseWriter, r *http.Request) {
 }
 
 func AddBook(w http.ResponseWriter, r *http.Request) {
-	message := models.AddBook(r.FormValue("title"), r.FormValue("author"), r.FormValue("publisher"))
+	message := models.AddBook(r.FormValue("title"), r.FormValue("author"), r.FormValue("publisher"), r.FormValue("quantity"))
 	books := models.FetchBooks().Books
 	details := types.BookCatalogue{
 		Books: books,

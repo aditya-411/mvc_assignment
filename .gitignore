@@ -3,3 +3,4 @@ vendor/
 .env
 d.sql
 .DS_Store
+notes.txt

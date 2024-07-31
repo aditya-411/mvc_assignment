@@ -60,12 +60,32 @@ func ApproveBookRequest(id int) string {
 	if Request == "0"{
 		return "There is no request with this id"
 	} else if Request == "1" {
+		if BookNotLeft(types.Book{Name: book}){
+			_, err = db.Exec("DELETE FROM transactions where id=?", id)
+			if err != nil {
+				return "error processing request"
+			}
+			return "Book not available"
+		}
+		
+		var title string
+		db.QueryRow("SELECT title FROM transactions WHERE id=?", id).Scan(&title)
+		_, err = db.Exec("UPDATE books SET quantity_left=quantity_left - 1 where title = ?", title)
+		if err != nil {
+			return "error approving request 1"
+		}
 		_, err = db.Exec("UPDATE transactions SET request_status='0', issued_at=CURDATE() WHERE id=?", id)
 		if err != nil {
-			return "error approving request"
+			return "error approving request 2"
 		}
 		return fmt.Sprintf("%s issued successfully to %s", book, user)
 	} else {
+		var title string
+		db.QueryRow("SELECT title FROM transactions WHERE id=?", id).Scan(&title)
+		_, err = db.Exec("UPDATE books SET quantity_left=quantity_left + 1 where title = ?", title)
+		if err != nil {
+			return "error approving request 2"
+		}
 		_, err = db.Exec("UPDATE transactions SET request_status='0', returned_at=CURDATE() WHERE id=?", id)
 		if err != nil {
 			return "error approving request"

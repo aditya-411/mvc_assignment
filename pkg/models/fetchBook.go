@@ -22,7 +22,7 @@ func FetchBooks() types.ListBooks {
 	var fetchBooks []types.Book
 	for rows.Next() {
 		var book types.Book
-		err := rows.Scan(&book.Name, &book.Author, &book.Publisher)
+		err := rows.Scan(&book.Name, &book.Author, &book.Publisher, &book.Quantity)
 		if err != nil {
 			fmt.Printf("error %s scanning the row", err)
 		}

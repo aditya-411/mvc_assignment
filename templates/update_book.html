@@ -11,15 +11,18 @@
             <p>Book Name: {{.Book.Name}}</p>
             <p>Publisher: {{.Book.Publisher}}</p>
             <p>Author: {{.Book.Author}}</p>
+            <p>Quantity left: {{.Book.Quantity}}</p>
         </div>
         <div class="add">
             <form action="/admin/update_confirm" method="POST">
                 <input type="hidden" name="old_title" value="{{.Book.Name}}">
                 <input type="hidden" name="old_author" value="{{.Book.Author}}">
                 <input type="hidden" name="old_publisher" value="{{.Book.Publisher}}">
+                <input type="hidden" name="old_quantity" value="{{.Book.Quantity}}">
                 <input type="text" name="title" placeholder="Enter book title">
                 <input type="text" name="author" placeholder="Enter book author">
                 <input type="text" name="publisher" placeholder="Enter book publisher">
+                <input type="text" name="quantity" placeholder="Enter book quantity">
                 <button type="submit" class="add, confirm-button">Update Book</button>
             </form>
         </div>

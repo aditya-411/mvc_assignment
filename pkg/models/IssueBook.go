@@ -1,6 +1,7 @@
 package models
 
 import (
+	"strconv"
 
 	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
@@ -31,6 +32,21 @@ func IssueRequestPending(user string) bool {
 	return count > 0
 }
 
+func BookNotLeft(book types.Book) bool {
+	db, err := Connection()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+	var count string
+	db.QueryRow("SELECT quantity_left FROM books WHERE title = ?", book.Name).Scan(&count)
+	count_int, err := strconv.Atoi(count)
+	if err != nil {
+		return true
+	}
+	return count_int == 0
+}
+
 
 func MakeDetailsStructIssuePage(book types.Book, message string, show_button bool) types.IssueBookPage {
 	return types.IssueBookPage{
@@ -51,6 +67,9 @@ func IssuePageDetails(book types.Book, user string) types.IssueBookPage {
 		show_button = false
 	} else if IssueRequestPending(user) {
 		message = "You already have a pending issue request for some book"
+		show_button = false
+	} else if BookNotLeft(book) {
+		message = "This book is not available right now"
 		show_button = false
 	}
 	return MakeDetailsStructIssuePage(book, message, show_button)

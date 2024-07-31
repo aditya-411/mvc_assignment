@@ -2,6 +2,8 @@ package models
 
 import (
 	"fmt"
+	"strconv"
+
 	"github.com/aditya-411/mvc_assignment/pkg/types"
 )
 
@@ -21,8 +23,12 @@ func UpdateBook(bookName string, book types.Book) (string, bool) {
 		return "One or more fields in the book details are empty", false
 	}
 
-	updateSql := "UPDATE books SET title = ? , author = ? , publisher = ? WHERE title = ?"
-	_, err = db.Exec(updateSql, book.Name, book.Author, book.Publisher, bookName)
+	_ , err = strconv.Atoi(book.Quantity)
+	if err != nil {
+		return fmt.Sprintf("error %s converting quantity to integer", err), false
+	}
+	updateSql := "UPDATE books SET title = ? , author = ? , publisher = ?, quantity_left = ? WHERE title = ?"
+	_, err = db.Exec(updateSql, book.Name, book.Author, book.Publisher, book.Quantity, bookName)
 	if err != nil {
 		return fmt.Sprintf("%s error updating the book from database", err), false
 	} else {
