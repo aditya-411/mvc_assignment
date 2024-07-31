@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Book View</title>
+    <link rel="stylesheet" type="text/css" href="https://mvc-maverick.tiiny.site/css/view_books_user.css">
+</head>
+<body>
+    <div class="header">
+        <h1>All transactions</h1>
+        <form action="/user">
+            <button type="submit">Back to Home</button>
+        </form>
+    </div>
+    {{if ne .Message ""}}
+    <p id="bottom" style="display: block">{{ .Message }}</p>
+    {{end}}
+    <h2>Currently Issued Books</h2>
+    <div class="book-list">
+        <table>
+            <thead>
+                <tr>
+                    <th class="list-header">ID</th>
+                    <th class="list-header">User</th>
+                    <th class="list-header">Title</th>
+                    <th class="list-header">Author</th>
+                    <th class="list-header">Issue Date</th>
+                    <th class="list-header">Last Date to Return</th>
+                    <th class="list-header">Fine</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ if eq (len .CurrentlyIssuedBooks) 0 }}
+                    <tr>
+                        <td colspan="7">No book is issued</td>
+                    </tr>
+                {{ else }}
+                    {{ range $book := .CurrentlyIssuedBooks }}
+                        <tr class="book-item">
+                            <td>{{ $book.Id }}</td>
+                            <td>{{ $book.Username }}</td>
+                            <td>{{ $book.Name }}</td>
+                            <td>{{ $book.Author }}</td>
+                            <td>{{ $book.IssueDate }}</td>
+                            <td>{{ $book.ReturnDate }}</td>
+                            <td>₹{{$book.Fine}}</td>
+                        </tr>
+                    {{ end }}
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+    <h2>Previously Issued Books</h2>
+    <div class="book-list">
+        <table>
+            <thead>
+                <tr>
+                    <th class="list-header">ID</th>
+                    <th class="list-header">User</th>
+                    <th class="list-header">Title</th>
+                    <th class="list-header">Author</th>
+                    <th class="list-header">Issue Date</th>
+                    <th class="list-header">Return Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ if eq (len .PrevTransactions) 0 }}
+                    <tr>
+                        <td colspan="5">You have no book history</td>
+                    </tr>
+                {{ else }}
+                    {{ range $book := .PrevTransactions }}
+                        <tr class="book-item">
+                            <td>{{ $book.Id }}</td>
+                            <td>{{ $book.Username }}</td>
+                            <td>{{ $book.Name }}</td>
+                            <td>{{ $book.Author }}</td>
+                            <td>{{ $book.IssueDate }}</td>
+                            <td>{{ $book.ReturnDate }}</td>
+                        </tr>
+                    {{ end }}
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+        
+            const tables = document.querySelectorAll("table");
+            tables.forEach(table => {
+                const rows = table.getElementsByTagName("tr");
+                
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName("td");
+                    if (cells.length > 5) {
+                        const returnDateCell = cells[5];
+                        const returnDate = new Date(returnDateCell.textContent);
+                        if (returnDate < oneMonthAgo) {
+                            rows[i].style.display = "none";
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+

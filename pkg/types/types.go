@@ -40,6 +40,7 @@ type PendingApproval struct {
 
 type PrevTransaction struct {
 	Id int
+	Username string
 	Name string
 	Author string
 	IssueDate string
@@ -47,6 +48,7 @@ type PrevTransaction struct {
 }
 
 type CurrentTransaction struct {
+	Username string
 	Id int
 	Name string
 	Author string

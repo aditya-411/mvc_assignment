@@ -37,6 +37,7 @@ func Start() {
 	router.HandleFunc("/admin/access", controller.AdminAccessRequestsPage).Methods("GET")
 	router.HandleFunc("/admin/access/approve", controller.ApproveAdminRequest).Methods("POST")
 	router.HandleFunc("/admin/access/deny", controller.RejectAdminRequest).Methods("POST")
+	router.HandleFunc("/admin/transactions", controller.AdminTransactionsPage).Methods("GET")
 
 	router.HandleFunc("/user", controller.UserPage).Methods("GET")
 	router.HandleFunc("/user/browse", controller.BrowseBooks).Methods("GET")
