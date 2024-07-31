@@ -88,22 +88,22 @@
         document.addEventListener("DOMContentLoaded", function() {
             const oneMonthAgo = new Date();
             oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+
+
+            table = document.getElementsByTagName("table")[1];
+            tr = table.getElementsByTagName("tr");
         
-            const tables = document.querySelectorAll("table");
-            tables.forEach(table => {
-                const rows = table.getElementsByTagName("tr");
-                
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName("td");
-                    if (cells.length > 5) {
-                        const returnDateCell = cells[5];
-                        const returnDate = new Date(returnDateCell.textContent);
-                        if (returnDate < oneMonthAgo) {
-                            rows[i].style.display = "none";
-                        }
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[5];
+                if (td) {
+                    if (new Date(td.textContent) < oneMonthAgo) {
+                        tr[i].style.display = "none";
                     }
-                }
-            });
+                }       
+            }
+        
+        
         });
     </script>
 </body>
