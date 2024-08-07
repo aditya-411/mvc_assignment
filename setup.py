@@ -1,6 +1,12 @@
 import os
 import getpass
 import bcrypt
+from subprocess import run
+
+# Function to run a shell command and capture its output
+def out(command):
+    result = run(command, shell=True, capture_output=True, text=True)
+    return result.stdout, result.stderr
 
 # Run a shell command
 print("running: go mod vendor")
@@ -36,24 +42,19 @@ while jwt_secret != confirm_jwt_secret:
 
 salt_rounds = input("Select a number of salt rounds for password hashing (10 default): ")
 
-lines = []
-lines.append(f'DB_USERNAME="{user}"')
-lines.append(f'DB_PASSWORD="{password}"')
-lines.append(f'DB_HOST="{host}"')
-lines.append(f'DB_PORT="{port}"')
-lines.append(f'DB_NAME="{database}"')
-lines.append(f'salt_rounds={salt_rounds}')
-lines.append(f'jwt_secret="{jwt_secret}"')
-
-print("Writing to .env file")
-with open(".env", "w") as file:
-    file.write("\n".join(lines))
-print("done")
-
 print(f"Creating database with name {database}")
-os.system(f"mysql -h {host} -P {port} -u {user} -p{password} -e 'CREATE DATABASE {database}'")
+result, err = out(f"mysql -h {host} -P {port} -u {user} -p{password} -e 'CREATE DATABASE {database}'")
+if "Can't create database" in err:
+    print("Database already exists with given name. Either drop it or try again with a different name.")
+    exit(1)
+if "Access denied" in err:
+    print("Database access denied. Check the username and password.")
+    exit(1)
 print(f"Database {database} created, copying dump.sql to it now")
-os.system(f"mysql -h {host} -P {port} -u {user} -p{password} {database} < dump.sql")
+result, err = out(f"mysql -h {host} -P {port} -u {user} -p{password} {database} < dump.sql")
+if err != "mysql: [Warning] Using a password on the command line interface can be insecure.\n":
+    print("Error copying dump.sql to the database. Check the database name and credentials or maybe dump.sql doesn't exist.")
+    exit(1)
 print("done")
 
 admin_username = input("Enter the admin username: ")
@@ -67,8 +68,29 @@ while admin_password != confirm_admin_password:
 print("Adding admin user to the database")
 salt = bcrypt.gensalt(int(salt_rounds))
 hashed = bcrypt.hashpw(admin_password.encode(), salt)
-os.system(f"mysql -h {host} -P {port} -u {user} -p{password} {database} -e 'DELETE FROM users'")
-os.system(f"mysql -h {host} -P {port} -u {user} -p{password} {database} -e 'INSERT INTO users (username, password, isadmin) VALUES (\"{admin_username}\", \"{hashed.decode()}\", 1)'")
+result, err = out(f"mysql -h {host} -P {port} -u {user} -p{password} {database} -e 'DELETE FROM users'")
+if err != "mysql: [Warning] Using a password on the command line interface can be insecure.\n":
+    print("Error deleting existing users from the database. Check the database name and credentials.")
+    exit(1)
+result, err = out(f"mysql -h {host} -P {port} -u {user} -p{password} {database} -e 'INSERT INTO users (username, password, isadmin) VALUES (\"{admin_username}\", \"{hashed.decode()}\", 1)'")
+if err != "mysql: [Warning] Using a password on the command line interface can be insecure.\n":
+    print("Error adding admin user to the database. Check the database name and credentials.")
+    exit(1)
+print("done")
+
+
+lines = []
+lines.append(f'DB_USERNAME="{user}"')
+lines.append(f'DB_PASSWORD="{password}"')
+lines.append(f'DB_HOST="{host}"')
+lines.append(f'DB_PORT="{port}"')
+lines.append(f'DB_NAME="{database}"')
+lines.append(f'salt_rounds={salt_rounds}')
+lines.append(f'jwt_secret="{jwt_secret}"')
+
+print("Writing to .env file")
+with open(".env", "w") as file:
+    file.write("\n".join(lines))
 print("done")
 
 print("Building the binary")
